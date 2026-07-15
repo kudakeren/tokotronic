@@ -51,7 +51,7 @@ export function LoginForm() {
             <label className="flex items-center gap-2"><input type="checkbox" /> Ingat saya</label>
             <Link className="text-primary" href="/forgot-password">Lupa password?</Link>
           </div>
-          <Button className="w-full" disabled={loading}>{loading ? "Memproses..." : "Masuk"}</Button>
+          <Button className="w-full" disabled={loading}>{loading ? "Mempreds..." : "Masuk"}</Button>
           <p className="text-center text-sm text-muted-foreground">Belum punya akun? <Link className="text-primary" href="/register">Daftar</Link></p>
         </form>
       </CardContent>
@@ -67,7 +67,7 @@ export function RegisterForm() {
       <CardHeader>
         <BrandLogo />
         <div className="mt-4 space-y-2">
-          <span className="inline-flex w-fit rounded-full bg-rose-500/10 px-3 py-1 text-xs font-black uppercase tracking-[0.14em] text-rose-700 dark:text-rose-300">
+          <span className="inline-flex w-fit rounded-full bg-red-500/10 px-3 py-1 text-xs font-black uppercase tracking-[0.14em] text-red-700 dark:text-red-300">
             Akun Pembeli
           </span>
           <CardTitle className="text-2xl font-black tracking-normal sm:text-3xl">Mulai Cari Gadget Bekas Terbaik</CardTitle>
@@ -110,7 +110,7 @@ export function RegisterForm() {
           </div>
           <div className="space-y-2"><Label>Kode referral</Label><Input name="referralCode" placeholder="Opsional" /></div>
           <label className="flex items-center gap-2 text-sm"><input name="terms" type="checkbox" required /> Saya setuju dengan syarat layanan</label>
-          <Button className="h-12 bg-rose-500 text-base font-bold shadow-lg shadow-rose-500/20 hover:bg-rose-600" disabled={loading}>
+          <Button className="h-12 bg-red-500 text-base font-bold shadow-lg shadow-red-500/20 hover:bg-red-600" disabled={loading}>
             {loading ? "Menyiapkan akun..." : "Buat Akun Sekarang"}
           </Button>
           <p className="text-center text-sm text-muted-foreground">
@@ -130,7 +130,7 @@ export function SellerRegisterForm() {
       <CardHeader>
         <BrandLogo />
         <div className="mt-4 space-y-2">
-          <span className="inline-flex w-fit rounded-full bg-amber-400/15 px-3 py-1 text-xs font-black uppercase tracking-[0.14em] text-amber-700 dark:text-amber-300">
+          <span className="inline-flex w-fit rounded-full bg-zinc-400/15 px-3 py-1 text-xs font-black uppercase tracking-[0.14em] text-zinc-700 dark:text-zinc-300">
             Reseller Program
           </span>
           <CardTitle className="text-2xl font-black tracking-normal sm:text-3xl">Daftar Jadi Reseller Gadget</CardTitle>

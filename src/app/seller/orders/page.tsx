@@ -36,7 +36,7 @@ export default async function SellerOrdersPage() {
                   </div>
                   <div className="shrink-0 sm:text-right">
                     <Badge>{order.status}</Badge>
-                    <p className="mt-2 font-black text-rose-600">{formatRupiah(order.price)}</p>
+                    <p className="mt-2 font-black text-red-600">{formatRupiah(order.price)}</p>
                     <p className="mt-1 text-xs text-muted-foreground">{formatDate(order.createdAt)}</p>
                   </div>
                 </div>

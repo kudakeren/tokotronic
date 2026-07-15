@@ -87,6 +87,6 @@
   }
 
   .glass-card {
-    @apply border border-rose-100/70 bg-white/90 shadow-fintech backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/70;
+    @apply border border-red-100/70 bg-white/90 shadow-fintech backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/70;
   }
 }

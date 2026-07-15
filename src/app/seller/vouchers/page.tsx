@@ -17,7 +17,7 @@ export default async function SellerVouchersPage() {
   const categoryOptions = categories.length ? categories : await prisma.productCategory.findMany({ take: 3 });
 
   return (
-    <DashboardShell title="Kelola Voucher Belanja" seller>
+    <DashboardShell title="Kelola Listing Gadget" seller>
       <div className="grid gap-6 xl:grid-cols-[420px_1fr]">
         <Card className="glass-card">
           <CardHeader><CardTitle>Tambah voucher</CardTitle></CardHeader>
@@ -37,7 +37,7 @@ export default async function SellerVouchersPage() {
                   <Badge>{voucher.isActive ? "ACTIVE" : "INACTIVE"}</Badge>
                 </div>
                 <div className="mt-3 flex items-center justify-between">
-                  <p className="font-black text-rose-600">{formatRupiah(voucher.price)}</p>
+                  <p className="font-black text-red-600">{formatRupiah(voucher.price)}</p>
                   <p className="text-xs font-bold text-muted-foreground">Stok {voucher.stock}</p>
                 </div>
               </div>

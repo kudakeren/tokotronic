@@ -58,7 +58,7 @@ export function DepositForm() {
         <CardContent className="space-y-3 text-sm text-muted-foreground">
           <p>Total deposit: <span className="font-semibold text-foreground">{formatRupiah(amount)}</span></p>
           <p>Status awal deposit adalah pending. Admin dapat approve manual dari panel admin dan saldo akan otomatis bertambah.</p>
-          {invoice && <p className="break-all rounded-md bg-rose-500/10 p-3 text-rose-700 dark:text-rose-300">Invoice: {invoice}</p>}
+          {invoice && <p className="break-all rounded-md bg-red-500/10 p-3 text-red-700 dark:text-red-300">Invoice: {invoice}</p>}
         </CardContent>
       </Card>
     </div>

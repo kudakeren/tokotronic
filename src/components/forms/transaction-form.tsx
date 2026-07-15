@@ -47,7 +47,7 @@ export function TransactionForm({
                 body: JSON.stringify({ productId, customerNumber })
               });
               const body = await response.json();
-              if (!response.ok) return toast.error(body.message?.includes("INSUFFICIENT") ? "Saldo tidak cukup" : "Transaksi gagal diproses");
+              if (!response.ok) return toast.error(body.message?.includes("INSUFFICIENT") ? "Saldo tidak cukup" : "Transaksi gagal dipreds");
               setSuccess(body.transaction.serialNumber ?? body.transaction.transactionNumber);
               toast.success("Transaksi sukses");
             }}
@@ -78,7 +78,7 @@ export function TransactionForm({
                     className={`min-w-0 overflow-hidden rounded-2xl border bg-white text-left shadow-sm transition hover:-translate-y-0.5 hover:border-primary dark:bg-slate-900 ${active ? "border-primary ring-2 ring-primary/20" : ""}`}
                   >
                     <div className="relative h-24 bg-cover bg-center" style={{ backgroundImage: `url(${serviceImage(product.name)})` }}>
-                      <div className="absolute inset-0 bg-gradient-to-br from-slate-950/40 via-transparent to-rose-500/20" />
+                      <div className="absolute inset-0 bg-gradient-to-br from-slate-950/40 via-transparent to-red-500/20" />
                       {active && <div className="absolute right-3 top-3 rounded-full bg-primary px-2.5 py-1 text-xs font-black text-white">Dipilih</div>}
                     </div>
                     <div className="p-3">
@@ -111,7 +111,7 @@ export function TransactionForm({
           <SummaryRow label="Admin fee" value={selected ? formatRupiah(selected.adminFee) : "-"} />
           <div className="flex flex-col gap-1 border-t pt-3 font-bold sm:flex-row sm:justify-between"><span>Total bayar</span><span>{formatRupiah(total)}</span></div>
           {success && (
-            <div className="rounded-md bg-rose-500/10 p-3 text-sm text-rose-700 dark:text-rose-300">
+            <div className="rounded-md bg-red-500/10 p-3 text-sm text-red-700 dark:text-red-300">
               <CheckCircle2 className="mb-2 h-5 w-5" />
               Serial/Referensi: {success}
             </div>

@@ -68,7 +68,7 @@ export function Topbar({ title, admin = false, seller = false }: { title: string
                     onClick={() => setOpen(false)}
                     className={cn(
                       "flex min-w-0 items-center gap-3 rounded-xl px-3 py-3 text-sm font-bold text-muted-foreground transition",
-                      active ? "bg-rose-500 text-white dark:bg-violet-400 dark:text-slate-950" : "bg-muted/50 hover:bg-muted hover:text-foreground"
+                      active ? "bg-red-500 text-white dark:bg-zinc-400 dark:text-slate-950" : "bg-muted/50 hover:bg-muted hover:text-foreground"
                     )}
                   >
                     <item.icon className="h-5 w-5 shrink-0" />

@@ -9,8 +9,8 @@ export function ServiceCard({ title, category, href, icon: Icon }: { title: stri
       <Card className="h-full min-w-0 border bg-card/95 shadow-sm transition hover:-translate-y-1 hover:border-primary hover:shadow-lg">
         <CardContent className="min-w-0 p-0">
           <div className="relative h-28 overflow-hidden rounded-t-lg bg-cover bg-center" style={{ backgroundImage: `url(${serviceImage(title)})` }}>
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-950/34 via-transparent to-rose-500/22" />
-            <div className="absolute left-3 top-3 grid h-10 w-10 place-items-center rounded-xl bg-white/92 text-rose-600 shadow-sm backdrop-blur">
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-950/34 via-transparent to-red-500/22" />
+            <div className="absolute left-3 top-3 grid h-10 w-10 place-items-center rounded-xl bg-white/92 text-red-600 shadow-sm backdrop-blur">
               <Icon className="h-5 w-5" />
             </div>
           </div>

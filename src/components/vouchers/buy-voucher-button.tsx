@@ -27,12 +27,12 @@ export function BuyVoucherButton({ voucherId }: { voucherId: string }) {
           return;
         }
         if (!response.ok) return toast.error(body.message ?? "Gagal membeli voucher");
-        toast.success("Voucher berhasil dibeli");
+        toast.success("Listing berhasil dibeli");
         router.push("/dashboard/transactions");
         router.refresh();
       }}
     >
-      {loading ? "Memproses..." : "Beli Voucher"}
+      {loading ? "Memproses..." : "Beli Gadget"}
     </Button>
   );
 }

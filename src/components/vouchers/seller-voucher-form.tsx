@@ -30,7 +30,7 @@ export function SellerVoucherForm({ categories }: { categories: ProductCategory[
         const body = await response.json().catch(() => ({}));
         setLoading(false);
         if (!response.ok) return toast.error(body.message ?? "Gagal membuat voucher");
-        toast.success("Voucher Belanja dibuat");
+        toast.success("Listing Gadget dibuat");
         event.currentTarget.reset();
         router.refresh();
       }}

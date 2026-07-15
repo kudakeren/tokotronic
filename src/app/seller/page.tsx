@@ -24,13 +24,13 @@ export default async function SellerDashboardPage() {
           <CardContent className="p-6 sm:p-8">
             <p className="text-sm font-bold text-white/70">Status toko</p>
             <h2 className="mt-2 text-3xl font-black tracking-normal">{user.sellerProfile?.status}</h2>
-            <p className="mt-3 max-w-2xl text-white/78">Kelola PPOB dan Voucher Belanja dari satu dashboard seller.</p>
+            <p className="mt-3 max-w-2xl text-white/78">Kelola stok, pesanan, dan listing gadget dari dashboard seller.</p>
           </CardContent>
         </Card>
         <div className="grid gap-4 md:grid-cols-4">
           <StatCard title="Saldo seller" value={formatRupiah(user.balance)} />
-          <StatCard title="Voucher aktif" value={voucherCount} tone="rose" />
-          <StatCard title="Pesanan baru" value={pendingOrders} tone="amber" />
+          <StatCard title="Voucher aktif" value={voucherCount} tone="red" />
+          <StatCard title="Pesanan baru" value={pendingOrders} tone="zinc" />
           <StatCard title="Penjualan terbaru" value={formatRupiah(revenue)} tone="slate" />
         </div>
         <Card className="border bg-white shadow-sm dark:bg-slate-950">
@@ -42,7 +42,7 @@ export default async function SellerDashboardPage() {
                   <p className="truncate font-bold">{order.title}</p>
                   <p className="break-all text-xs text-muted-foreground">{order.redeemCode}</p>
                 </div>
-                <p className="shrink-0 font-black text-rose-600">{formatRupiah(order.price)}</p>
+                <p className="shrink-0 font-black text-red-600">{formatRupiah(order.price)}</p>
               </div>
             ))}
           </CardContent>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 120" role="img" aria-label="BPJS Kesehatan">
+  <rect width="320" height="120" rx="28" fill="#fff"/>
+  <circle cx="66" cy="60" r="34" fill="#21A64A"/>
+  <path d="M66 38v44M44 60h44" stroke="#fff" stroke-width="12" stroke-linecap="round"/>
+  <text x="120" y="58" font-family="Arial, Helvetica, sans-serif" font-size="31" font-weight="900" fill="#11833B">BPJS</text>
+  <text x="120" y="85" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#11833B">Kesehatan</text>
+</svg>

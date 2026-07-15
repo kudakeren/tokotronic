@@ -1,0 +1,14 @@
+.next
+node_modules
+.env
+.env.local
+dist
+coverage
+*.log
+.local-postgres
+tmp-responsive
+dev-server*.log
+*.zip
+.hostinger_fix_ed25519*
+.ssh_known_hosts
+hostinger.env

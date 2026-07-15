@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 120" role="img" aria-label="PLN">
+  <rect width="320" height="120" rx="28" fill="#F9E547"/>
+  <rect x="48" y="30" width="58" height="60" fill="#2EAAE1"/>
+  <path d="M76 24L58 66h22L66 96l42-52H84L96 24H76z" fill="#E31E24"/>
+  <text x="132" y="75" font-family="Arial, Helvetica, sans-serif" font-size="46" font-weight="900" fill="#2EAAE1">PLN</text>
+</svg>

@@ -1,0 +1,372 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  SELLER
+  ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+}
+
+enum SellerStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum TransactionStatus {
+  PENDING
+  SUCCESS
+  FAILED
+  REFUNDED
+}
+
+enum DepositStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
+enum DepositMethod {
+  BANK_TRANSFER
+  QRIS
+  VIRTUAL_ACCOUNT
+}
+
+enum BalanceMutationType {
+  DEPOSIT
+  TRANSACTION
+  REFUND
+  ADJUSTMENT
+  COMMISSION
+  VOUCHER_SALE
+  WITHDRAW
+}
+
+enum InvoiceStatus {
+  UNPAID
+  PAID
+  CANCELLED
+}
+
+enum ProviderStatus {
+  ACTIVE
+  INACTIVE
+  MAINTENANCE
+}
+
+enum DiscountType {
+  FLAT
+  PERCENTAGE
+}
+
+enum CommissionStatus {
+  PENDING
+  PAID
+  CANCELLED
+}
+
+enum VoucherOrderStatus {
+  PAID
+  REDEEMED
+  CANCELLED
+}
+
+model User {
+  id               String            @id @default(cuid())
+  name             String?
+  email            String            @unique
+  phone            String            @unique
+  password         String?
+  image            String?
+  role             Role              @default(USER)
+  status           UserStatus        @default(ACTIVE)
+  balance          Decimal           @default(0) @db.Decimal(18, 2)
+  referralCode     String            @unique
+  referredById     String?
+  referredBy       User?             @relation("UserReferrals", fields: [referredById], references: [id])
+  referredUsers    User[]            @relation("UserReferrals")
+  accounts         Account[]
+  sessions         Session[]
+  sellerProfile    SellerProfile?
+  sellerProducts   Product[]         @relation("SellerProducts")
+  sellerVouchers   FoodVoucher[]
+  voucherOrders    VoucherOrder[]    @relation("VoucherBuyer")
+  sellerOrders     VoucherOrder[]    @relation("VoucherSeller")
+  transactions     Transaction[]
+  deposits         Deposit[]         @relation("UserDeposits")
+  approvedDeposits Deposit[]         @relation("ApprovedDeposits")
+  balanceMutations BalanceMutation[]
+  invoices         Invoice[]
+  referralsMade    Referral[]        @relation("Referrer")
+  referralsJoined  Referral[]        @relation("ReferredUser")
+  commissions      Commission[]
+  activityLogs     ActivityLog[]
+  notifications    Notification[]
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+}
+
+model SellerProfile {
+  id          String       @id @default(cuid())
+  userId      String       @unique
+  storeName   String
+  storeSlug   String       @unique
+  description String
+  address     String
+  city        String
+  status      SellerStatus @default(PENDING)
+  approvedAt  DateTime?
+  rejectedAt  DateTime?
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ProductCategory {
+  id          String    @id @default(cuid())
+  name        String
+  slug        String    @unique
+  icon        String
+  description String
+  isActive    Boolean   @default(true)
+  products    Product[]
+  vouchers    FoodVoucher[]
+  createdAt   DateTime  @default(now())
+}
+
+model Product {
+  id           String           @id @default(cuid())
+  categoryId   String
+  providerId   String?
+  sellerId     String?
+  name         String
+  code         String           @unique
+  providerName String
+  type         String
+  description  String
+  costPrice    Decimal          @db.Decimal(18, 2)
+  sellPrice    Decimal          @db.Decimal(18, 2)
+  adminFee     Decimal          @default(0) @db.Decimal(18, 2)
+  isActive     Boolean          @default(true)
+  category     ProductCategory  @relation(fields: [categoryId], references: [id])
+  provider     Provider?        @relation(fields: [providerId], references: [id])
+  seller       User?            @relation("SellerProducts", fields: [sellerId], references: [id])
+  transactions Transaction[]
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+}
+
+model FoodVoucher {
+  id          String          @id @default(cuid())
+  sellerId    String
+  categoryId  String
+  title       String
+  code        String          @unique
+  description String
+  restaurant  String
+  city        String
+  price       Decimal         @db.Decimal(18, 2)
+  stock       Int             @default(0)
+  validUntil  DateTime
+  isActive    Boolean         @default(true)
+  seller      User            @relation(fields: [sellerId], references: [id])
+  category    ProductCategory @relation(fields: [categoryId], references: [id])
+  orders      VoucherOrder[]
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+}
+
+model VoucherOrder {
+  id          String             @id @default(cuid())
+  buyerId     String
+  sellerId    String
+  voucherId   String
+  orderNumber String             @unique
+  redeemCode  String             @unique
+  title       String
+  price       Decimal            @db.Decimal(18, 2)
+  status      VoucherOrderStatus @default(PAID)
+  redeemedAt  DateTime?
+  buyer       User               @relation("VoucherBuyer", fields: [buyerId], references: [id])
+  seller      User               @relation("VoucherSeller", fields: [sellerId], references: [id])
+  voucher     FoodVoucher        @relation(fields: [voucherId], references: [id])
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+}
+
+model Transaction {
+  id                String            @id @default(cuid())
+  userId            String
+  productId         String
+  invoiceId         String?
+  transactionNumber String            @unique
+  customerNumber    String
+  customerName      String?
+  productName       String
+  categoryName      String
+  price             Decimal           @db.Decimal(18, 2)
+  adminFee          Decimal           @db.Decimal(18, 2)
+  totalAmount       Decimal           @db.Decimal(18, 2)
+  status            TransactionStatus @default(PENDING)
+  serialNumber      String?
+  notes             String?
+  paidAt            DateTime?
+  user              User              @relation(fields: [userId], references: [id])
+  product           Product           @relation(fields: [productId], references: [id])
+  invoices          Invoice[]
+  commissions       Commission[]
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+}
+
+model Deposit {
+  id            String        @id @default(cuid())
+  userId        String
+  depositNumber String        @unique
+  method        DepositMethod
+  amount        Decimal       @db.Decimal(18, 2)
+  status        DepositStatus @default(PENDING)
+  proofUrl      String?
+  adminNote     String?
+  approvedById  String?
+  approvedAt    DateTime?
+  user          User          @relation("UserDeposits", fields: [userId], references: [id])
+  approvedBy    User?         @relation("ApprovedDeposits", fields: [approvedById], references: [id])
+  invoices      Invoice[]
+  createdAt     DateTime      @default(now())
+}
+
+model BalanceMutation {
+  id            String              @id @default(cuid())
+  userId        String
+  type          BalanceMutationType
+  amount        Decimal             @db.Decimal(18, 2)
+  balanceBefore Decimal             @db.Decimal(18, 2)
+  balanceAfter  Decimal             @db.Decimal(18, 2)
+  referenceId   String?
+  description   String
+  user          User                @relation(fields: [userId], references: [id])
+  createdAt     DateTime            @default(now())
+}
+
+model Invoice {
+  id            String        @id @default(cuid())
+  invoiceNumber String        @unique
+  userId        String
+  transactionId String?
+  depositId     String?
+  subtotal      Decimal       @db.Decimal(18, 2)
+  adminFee      Decimal       @db.Decimal(18, 2)
+  total         Decimal       @db.Decimal(18, 2)
+  status        InvoiceStatus @default(UNPAID)
+  issuedAt      DateTime      @default(now())
+  paidAt        DateTime?
+  user          User          @relation(fields: [userId], references: [id])
+  transaction   Transaction?  @relation(fields: [transactionId], references: [id])
+  deposit       Deposit?      @relation(fields: [depositId], references: [id])
+}
+
+model Provider {
+  id           String         @id @default(cuid())
+  name         String
+  code         String         @unique
+  baseUrl      String?
+  apiKeyMasked String?
+  status       ProviderStatus @default(ACTIVE)
+  priority     Int            @default(1)
+  products     Product[]
+  createdAt    DateTime       @default(now())
+}
+
+model Promo {
+  id             String       @id @default(cuid())
+  code           String       @unique
+  title          String
+  description    String
+  discountType   DiscountType
+  discountValue  Decimal      @db.Decimal(18, 2)
+  minTransaction Decimal      @db.Decimal(18, 2)
+  maxDiscount    Decimal?     @db.Decimal(18, 2)
+  expiredAt      DateTime
+  isActive       Boolean      @default(true)
+}
+
+model Referral {
+  id             String   @id @default(cuid())
+  referrerId     String
+  referredUserId String
+  referrer       User     @relation("Referrer", fields: [referrerId], references: [id])
+  referredUser   User     @relation("ReferredUser", fields: [referredUserId], references: [id])
+  createdAt      DateTime @default(now())
+
+  @@unique([referrerId, referredUserId])
+}
+
+model Commission {
+  id            String           @id @default(cuid())
+  userId        String
+  transactionId String?
+  amount        Decimal          @db.Decimal(18, 2)
+  status        CommissionStatus @default(PENDING)
+  user          User             @relation(fields: [userId], references: [id])
+  transaction   Transaction?     @relation(fields: [transactionId], references: [id])
+  createdAt     DateTime         @default(now())
+}
+
+model ActivityLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  type      String
+  message   String
+  metadata  Json?
+  user      User?    @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  message   String
+  type      String
+  isRead    Boolean  @default(false)
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+}

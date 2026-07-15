@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 120" role="img" aria-label="Multi Finance">
+  <rect width="320" height="120" rx="28" fill="#F8FAFC"/>
+  <rect x="46" y="36" width="70" height="54" rx="12" fill="#0F766E"/>
+  <path d="M60 54h42M60 72h28" stroke="#fff" stroke-width="8" stroke-linecap="round"/>
+  <text x="136" y="62" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="900" fill="#0F766E">Multi</text>
+  <text x="136" y="88" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="800" fill="#0F766E">Finance</text>
+</svg>

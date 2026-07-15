@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 120" role="img" aria-label="PDAM">
+  <rect width="320" height="120" rx="28" fill="#E8F7FF"/>
+  <path d="M74 25c24 30 36 48 36 66 0 20-16 34-36 34S38 111 38 91c0-18 12-36 36-66z" fill="#0EA5E9"/>
+  <text x="128" y="74" font-family="Arial, Helvetica, sans-serif" font-size="46" font-weight="900" fill="#0369A1">PDAM</text>
+</svg>

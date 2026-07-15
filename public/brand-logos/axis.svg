@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 120" role="img" aria-label="AXIS">
+  <rect width="320" height="120" rx="28" fill="#671E75"/>
+  <text x="52" y="78" font-family="Arial, Helvetica, sans-serif" font-size="56" font-weight="900" fill="#fff">AXIS</text>
+  <path d="M230 30h42l-58 60h-42z" fill="#F6D32D"/>
+</svg>
